@@ -1,7 +1,9 @@
 """Flask app configuration."""
 
 from os import environ, path
+import subprocess
 
+import redis
 from dotenv import load_dotenv
 
 BASE_DIR = path.abspath(path.dirname(__file__))
@@ -18,6 +20,11 @@ class Config:
     FLASK_APP = "wsgi.py"
     FLASK_DEBUG = environ.get("FLASK_DEBUG")
     SECRET_KEY = environ.get("SECRET_KEY")
+
+    # Flask-Session
+    REDIS_URI = environ.get("REDIS_URI")
+    SESSION_TYPE = "redis"
+    SESSION_REDIS = redis.from_url(REDIS_URI)
 
     # Flask-SQLAlchemy
     SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
